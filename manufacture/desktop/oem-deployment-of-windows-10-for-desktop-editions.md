@@ -244,13 +244,13 @@ The Windows PE USB must be at least 512MB and at most 32GB. Don't use a Windows-
 
 2.  Copy the base WinPE files into a new folder:
 
-    ``` syntax
+    ``` shell
     copype amd64 C:\winpe_amd64
     ```
 
     Repeat if you’re also deploying x86 devices:
 
-    ``` syntax
+    ``` cli
     copype x86 C:\winpe_x86
     ```
 
