@@ -37,35 +37,43 @@ The following app package (.appx or .appxbundle) servicing options are available
 
 This section describes how you can use each app servicing option. These options are not case sensitive.
 
-### <span id="_Get-Help___"></span><span id="_get-help___"></span><span id="_GET-HELP___"></span>/Get-Help /?
+### /Get-Help /?
 
 When used immediately after an app package servicing command-line option, information about the option and the arguments is displayed. Additional topics might become available when an image is specified.
 
-Examples:
+**Examples**:
 
-**Dism /image:C:\\test\\offline /Add- ProvisionedAppxPackages /?**
+```
+Dism /image:C:\test\offline /Add- ProvisionedAppxPackages /?
+Dism /online /Get-ProvisionedAppxPackages /?
+```
 
-**Dism /online /Get-ProvisionedAppxPackages /?**
-
-### <span id="_Get-ProvisionedAppxPackages"></span><span id="_get-provisionedappxpackages"></span><span id="_GET-PROVISIONEDAPPXPACKAGES"></span>/Get-ProvisionedAppxPackages
+### /Get-ProvisionedAppxPackages
 
 Displays information about app packages (.appx or .appxbundle), in an image, that are set to install for each new user.
 
-**Dism /Image:C:\\test\\offline /Get-ProvisionedAppxPackages**
+**Example**:
+```
+Dism /Image:C:\test\offline /Get-ProvisionedAppxPackages
+```
 
-### <span id="Add-ProvisionedAppxPackage"></span>/Add-ProvisionedAppxPackage
-
-**/Add-ProvisionedAppxPackage { /FolderPath:&lt; App\_folder\_path&gt; \[/SkipLicense\] \[/CustomDataPath:&lt; custom\_file\_path&gt;\] | /PackagePath:&lt; main\_package\_path&gt; \[/DependencyPackagePath:&lt; dependency\_package\_path&gt;\] {\[/LicenseFile:&lt; license\_file\_path&gt;\]|\[/SkipLicense\]} \[/CustomDataPath:&lt; custom\_file\_path&gt;\] }**
+### /Add-ProvisionedAppxPackage
 
 Adds one or more app packages to the image.
 
 The app will be added to the Windows image and registered for each existing or new user profile the next time the user logs in. If the app is added to an online image, the app will not be registered for the current user until the next time the user logs in.
 
+Syntax:
+
+```
+dism.exe /Add-ProvisionedAppxPackage {/FolderPath:<App_folder_path> [/SkipLicense\] [/CustomDataPath:<custom_file_path>] | /PackagePath:<main_package_path> [/DependencyPackagePath:<dependency_package_path>] {[/LicenseFile:<license_file_path>]| [/SkipLicense\]} [/CustomDataPath:<custom_file_path>]}
+```
+
 Use **/FolderPath** to specify a folder of unpacked app files containing a main package, any dependency packages, and the license file. This is only supported for an unpacked app package.
 
 Use **/PackagePath** to specify an app package (.appx or .appxbundle). You can use **/PackagePath** when provisioning a line-of-business app online.
 
-**Important**  
+>**Important**
 Use the **/PackagePath** parameter to provision .appxbundle packages.
 
 **/PackagePath** is not supported from a host PC that is running Windows Preinstallation Environment (WinPE) 4.0, Windows Server 2008 R2, or an earlier version of Windows.
@@ -74,34 +82,12 @@ Use the **/PackagePath** parameter to provision .appxbundle packages.
 
 If the package has dependencies that are architecture-specific, you must install all of the applicable architectures for the dependency on the target image. For example, on an x64 target image, include a path to both the x86 and x64 dependency packages or include them both in the folder of unpacked app files.
 
-<table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Computer Architecture</th>
-<th align="left">Dependencies to install:</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left"><p>x64</p></td>
-<td align="left"><p>x64 and x86</p></td>
-</tr>
-<tr class="even">
-<td align="left"><p>x86</p></td>
-<td align="left"><p>x86</p></td>
-</tr>
-<tr class="odd">
-<td align="left"><p>ARM</p></td>
-<td align="left"><p>Windows RT (ARM) only</p></td>
-</tr>
-</tbody>
-</table>
+| Computer Architecture	| Dependencies to install: |
+| ----- | ----- |
+| x64 | x64 and x86 |
+| x86 | x86 |
+| ARM | Windows RT (ARM) only |
 
- 
 
 Use **/CustomDataPath** to specify an optional custom data file for an app. You can specify any file name. The file will be renamed to Custom.dat when it is added to the image.
 
@@ -109,38 +95,48 @@ Use **/LicensePath** with the **/PackagePath** option to specify the location of
 
 Only use **/SkipLicense** with apps that do not require a license on a sideloading-enabled computer. Using **/SkipLicense** in other scenarios can compromise an image.
 
-Examples:
+**Examples:**
 
-**Dism /Image:C:\\test\\offline /Add-ProvisionedAppxPackage /FolderPath:c:\\Test\\Apps\\MyUnpackedApp /CustomDataPath:c:\\Test\\Apps\\CustomData.xml**
+```
+Dism /Image:C:\test\offline /Add-ProvisionedAppxPackage /FolderPath:c:\Test\Apps\MyUnpackedApp /CustomDataPath:c:\Test\Apps\CustomData.xml
+Dism /Online /Add-ProvisionedAppxPackage /PackagePath:C:\Test\Apps\MyPackedApp\MainPackage.appx /DependencyPackagePath:C:\Test\Apps\MyPackedApp\Framework-x86.appx /DependencyPackagePath:C:\Test\Apps\MyPackedApp\Framework-x64.appx /LicensePath:C:\Test\Apps\MyLicense.xml
+Dism /Online /Add-ProvisionedAppxPackage /FolderPath:C:\Test\Apps\MyUnpackedApp /SkipLicense
+Dism /Image:C:\test\offline /Add-ProvisionedAppxPackage /PackagePath:C:\Test\Apps\MyPackedApp\MainPackage.appxbundle /SkipLicense
+```
 
-**Dism /Online /Add-ProvisionedAppxPackage /PackagePath:C:\\Test\\Apps\\MyPackedApp\\MainPackage.appx /DependencyPackagePath:C:\\Test\\Apps\\MyPackedApp\\Framework-x86.appx /DependencyPackagePath:C:\\Test\\Apps\\MyPackedApp\\Framework-x64.appx /LicensePath:C:\\Test\\Apps\\MyLicense.xml**
-
-**Dism /Online /Add-ProvisionedAppxPackage /FolderPath:C:\\Test\\Apps\\MyUnpackedApp /SkipLicense**
-
-**Dism /Image:C:\\test\\offline /Add-ProvisionedAppxPackage /PackagePath:C:\\Test\\Apps\\MyPackedApp\\MainPackage.appxbundle /SkipLicense**
-
-### <span id="Remove-ProvisionedAppxPackage"></span>/Remove-ProvisionedAppxPackage
-
-**/Remove-ProvisionedAppxPackage /PackageName:&lt; PackageName&gt;**
+### /Remove-ProvisionedAppxPackage
 
 Removes provisioning for app packages (.appx or .appxbundle) from the image. App packages will not be registered to new user accounts that are created.
 
-**Important**  
+Syntax:
+
+```
+/Remove-ProvisionedAppxPackage /PackageName:<PackageName>
+```
+
+>**Important**  
 This option will only remove the provisioning for a package if it is registered to any user profile. Use the [Remove-AppxPackage](http://go.microsoft.com/fwlink/?LinkId=215772) cmdlet in PowerShell to remove the app for each user that it is already registered to in order to fully remove the app from the image.
 
 If the app has not been registered to any user profile, the /Remove-ProvisionedAppxPackage option will remove the package completely.
 
  
-
 To remove app packages from a Windows Server 2012 image that has the Desktop Experience installed, you must remove the app packages before you remove the Desktop Experience. The Desktop Experience is a requirement of the **/Remove-ProvisionedAppxPackage** option for Server Core installations of Windows Server 2012.
 
-Examples:
+**Examples**:
 
-**Dism /Image:C:\\test\\offline /Remove-ProvisionedAppxPackage /PackageName:microsoft.devx.appx.app1\_1.0.0.0\_neutral\_ac4zc6fex2zjp**
+```
+Dism /Image:C:\test\offline /Remove-ProvisionedAppxPackage /PackageName:microsoft.devx.appx.app1_1.0.0.0_neutral_ac4zc6fex2zjp
+```
 
-### <span id="_Set-ProvisionedAppxDataFile___CustomDataPath___custom_file_path____PackageName___PackageName_"></span><span id="_set-provisionedappxdatafile___customdatapath___custom_file_path____packagename___packagename_"></span><span id="_SET-PROVISIONEDAPPXDATAFILE___CUSTOMDATAPATH___CUSTOM_FILE_PATH____PACKAGENAME___PACKAGENAME_"></span>/Set-ProvisionedAppxDataFile \[/CustomDataPath:&lt; custom\_file\_path&gt;\] /PackageName:&lt; PackageName&gt;
+### /Set-ProvisionedAppxDataFile
 
 Adds a custom data file into the specified app package (.appx or .appxbundle).
+
+Syntax:
+
+```
+/Set-ProvisionedAppxDataFile [/CustomDataPath<custom_file_path>] /PackageName<PackageName>
+```
 
 The specified app (.appx or .appxbundle) package must already be added to the image prior to when you add the custom data file with this option. You can also add a custom data file when you use the **/Add-ProvisionedAppxPackage** option.
 
@@ -148,9 +144,11 @@ Use **/CustomDataPath** to specify an optional custom data file for an app. You 
 
 Use **/PackageName** to specify an app package (.appx or .appxbundle).
 
-Examples:
+**Example**:
 
-**DISM.exe /Image:C:\\test\\offline /Set-ProvisionedAppxDataFile /CustomDataPath:c:\\Test\\Apps\\Custom.dat /PackageName:microsoft.appx.app1\_1.0.0.0\_neutral\_ac4zc6fex2zjp**
+```
+DISM.exe /Image:C:\test\offline /Set-ProvisionedAppxDataFile /CustomDataPath:c:\Test\Apps\Custom.dat /PackageName:microsoft.appx.app1_1.0.0.0_neutral_ac4zc6fex2zjp
+```
 
 ## <span id="BKMK_understanding"></span><span id="bkmk_understanding"></span><span id="BKMK_UNDERSTANDING"></span>Understanding How DISM Adds .appxbundle Resource Packages to an Image
 

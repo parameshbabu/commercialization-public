@@ -274,8 +274,8 @@ You can use the values in the WEKF\_PredefinedKey.Id column to configure the Win
 <td><p>Lock device orientation</p></td>
 </tr>
 <tr class="even">
-<td><p>Windows logo key+Enter</p></td>
-<td><p><strong>Win+Enter</strong></p></td>
+<td><p>Windows logo key+Ctrl+Enter</p></td>
+<td><p><strong>Win+Ctrl+Enter</strong></p></td>
 <td><p>Start Narrator</p></td>
 </tr>
 <tr class="odd">

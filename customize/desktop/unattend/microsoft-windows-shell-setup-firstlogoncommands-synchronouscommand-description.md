@@ -63,12 +63,12 @@ The following XML output shows how to set first logon commands.
 ``` syntax
 <FirstLogonCommands>
    <SynchronousCommand wcm:action="add">
-      <CommandLine>c:synccommands\command1.exe</CommandLine>
+      <CommandLine>c:\synccommands\command1.exe</CommandLine>
       <Description>Description_of_command1</Description>
       <Order>1</Order>
    </SynchronousCommand>
    <SynchronousCommand wcm:action="add">
-      <CommandLine>c:synccommands\command2.exe</CommandLine>
+      <CommandLine>c:\synccommands\command2.exe</CommandLine>
       <Description>Description_of_command2</Description>
       <Order>2</Order>
    </SynchronousCommand>

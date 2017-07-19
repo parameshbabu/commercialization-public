@@ -70,13 +70,13 @@ The following XML output shows examples of how to set two logon commands. The `R
 ``` syntax
 <LogonCommands>
   <AsynchronousCommand wcm:action="add">
-    <CommandLine>c:asynccommands\command1.exe</CommandLine>
+    <CommandLine>c:\asynccommands\command1.exe</CommandLine>
     <Description>Description_of_command1</Description>
     <Order>1</Order>
     <RequiresUserInput>true</RequiresUserInput>
   </AsynchronousCommand>
   <AsynchronousCommand wcm:action="add">
-    <CommandLine>c:asynccommands\command2.exe</CommandLine>
+    <CommandLine>c:\asynccommands\command2.exe</CommandLine>
     <Description>Description_of_command2</Description>
     <Order>2</Order>
     <RequiresUserInput>false</RequiresUserInput>
